@@ -1,0 +1,12 @@
+{
+	"name": "Personalised Assistance",
+	"description": "Pomodoro, To-Do, Notes and what not",
+	"version": "0.1",
+	"manifest_version": 2,
+	"app": {
+		"background": {
+			"scripts": ["background.js"]
+		}
+	},
+	"icons": { "16": "icon-small.png", "128": "icon.png" }
+}
