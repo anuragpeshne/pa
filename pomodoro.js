@@ -1,10 +1,8 @@
 pomodoroTimer = {
    	totalTime : 25,
-	timerDisplay: {'minutes' :'#pomodoroTimer span#minutes', 'seconds' :'#pomodoroTimer span#seconds'},
 	notifier : null,
 
 
-	test:function(){console.log(this);},
 	tick:function(){
 		if(this.timeLeft['seconds'] === 0){ 				//if seconds are 00
 			if(this.timeLeft['minutes'] === 0)
@@ -18,20 +16,38 @@ pomodoroTimer = {
 	},
 
 	updateTimer:function(){
-		$(this.timerDisplay.minutes).html(this.timeLeft['minutes']);
-		$(this.timerDisplay.seconds).html(this.timeLeft['seconds']);
+		$(this.timerDisplay.minutes).html(("0"+this.timeLeft['minutes']).slice(-2));
+		$(this.timerDisplay.seconds).html(("0"+this.timeLeft['seconds']).slice(-2));
 	},
 
 	start:function(){
-		this.timeLeft = {'minutes':this.totalTime,'seconds':00};
 		var that = this;
-		setInterval(function(){that.tick(); that.updateTimer()}, 1000);
+		this.clock = setInterval(function(){that.updateTimer();that.tick(); }, 1000);
 	},
-}
+	pause:function(){
+		if(this.clock)
+			clearInterval(this.clock);
+	},
+	reset:function(){
+		if(this.clock)
+			clearInterval(this.clock);
+		this.timeLeft = {'minutes':this.totalTime,'seconds':00};
+		this.start()
+	},
 
-$(document).ready(function(){
-	$('#startButt').click(function(){
-	//	pomodoroTimer.timerDisplay.minutes.html("sd");
-		pomodoroTimer.start();
-	})
-});
+	initialize:function(timerButtons, timerDisplay){
+		this.timeLeft = {'minutes':this.totalTime,'seconds':00};
+		this.timerDisplay = timerDisplay;
+		$(timerButtons.startButt).click(function(){
+			pomodoroTimer.start();
+			$(timerButtons.startButt).hide();
+			$(timerButtons.pauseButt).show();
+		});
+		$(timerButtons.pauseButt).click(function(){
+			pomodoroTimer.pause();
+			$(timerButtons.startButt).show();
+			$(timerButtons.pauseButt).hide();
+		});
+		$(timerButtons.resetButt).click(function(){pomodoroTimer.reset()});
+	}
+}
