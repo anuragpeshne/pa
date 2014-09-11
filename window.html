@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="https://code.jquery.com/jquery-2.1.1.min.js" ></script>
-<script type="text/javascript" charset="utf-8">
-$('document').ready(function(){
-	alert("as");			
-});
-</script>
+<script src="lib/jquery.min.js"></script>
+<script src="pomodoro.js"></script>
 </head>
 <body>
-	<div>Hello, world! ver 1</div>
-	<script> alert("as"); </script>
+<div id='pomodoroContainer'>
+	<div id="pomodoroTimer">
+		<span id="minutes"></span>:<span id="seconds"></span>
+	</div>
+	<button id="startButt">Start</button>
+</div>
 </body>
 </html>
