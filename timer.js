@@ -40,8 +40,8 @@ Timer = {
 
 	init:function(timerConfig){
 		this.totalTime = timerConfig.totalTime || 25;
-		this.update = timerConfig.update; 						//what to update on each tick
-		this.callBackTrigger = timerConfig.callBackTrigger; 	
+		this.update = timerConfig.update || this.update; 						//what to update on each tick
+		this.callBackTrigger = timerConfig.callBackTrigger || this.callBackTrigger; 	
 		this.reset();
 	},
 }
