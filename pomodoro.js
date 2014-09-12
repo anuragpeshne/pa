@@ -1,12 +1,14 @@
 pomodoroTimer = {
    	totalTime : 25,
-	notifier : null,
+	notifier : notifier,
 
 
 	tick:function(){
 		if(this.timeLeft['seconds'] === 0){ 				//if seconds are 00
-			if(this.timeLeft['minutes'] === 0)
-				this.notifier.notifyTimeUp();
+			if(this.timeLeft['minutes'] === 0){
+				clearInterval(this.clock);
+				this.notifier.notify({'title':'Pomodoro Done', 'message':'Pomodoro Session complete. Time for a break'});
+			}
 			else{
 				this.timeLeft['minutes'] -= 1;
 				this.timeLeft['seconds'] += 60; 			//add 60 seconds
@@ -33,15 +35,14 @@ pomodoroTimer = {
 			clearInterval(this.clock);
 	},
 	reset:function(){
-		if(this.clock)
-			clearInterval(this.clock);
 		this.timeLeft = {'minutes':this.totalTime,'seconds':00};
-		this.start()
+		this.updateTimer();
 	},
 
 	initialize:function(timerButtons, timerDisplay){
 		this.timeLeft = {'minutes':this.totalTime,'seconds':00};
 		this.timerDisplay = timerDisplay;
+		this.updateTimer();
 		$(timerButtons.startButt).click(function(){
 			pomodoroTimer.start();
 			$(timerButtons.startButt).hide();
