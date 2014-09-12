@@ -1,58 +1,52 @@
-pomodoroTimer = {
-   	totalTime : 25,
-	notifier : notifier,
-
-
-	tick:function(){
-		if(this.timeLeft['seconds'] === 0){ 				//if seconds are 00
-			if(this.timeLeft['minutes'] === 0){
-				clearInterval(this.clock);
-				this.notifier.notify({'title':'Pomodoro Done', 'message':'Pomodoro Session complete. Time for a break'});
-			}
-			else{
-				this.timeLeft['minutes'] -= 1;
-				this.timeLeft['seconds'] += 60; 			//add 60 seconds
-			}
-		}
-		this.timeLeft['seconds']--; 						//not sure if doing this after 00:00 is ok
-	},
-
-	updateTimer:function(){
-		$(this.timerDisplay.minutes).html(("0"+this.timeLeft['minutes']).slice(-2));
-		$(this.timerDisplay.seconds).html(("0"+this.timeLeft['seconds']).slice(-2));
-	},
-
-	start:function(){
-		var that = this;
-		(function startTimer(){
-			that.updateTimer();
-			that.tick();
-			that.clock = setTimeout(function(){startTimer()}, 1000);
-		})();
-	},
-	pause:function(){
-		if(this.clock)
-			clearInterval(this.clock);
-	},
-	reset:function(){
-		this.timeLeft = {'minutes':this.totalTime,'seconds':00};
-		this.updateTimer();
-	},
+PomodoroTimer = {
 
 	initialize:function(timerButtons, timerDisplay){
-		this.timeLeft = {'minutes':this.totalTime,'seconds':00};
+		this.timerButtons = timerButtons;
 		this.timerDisplay = timerDisplay;
-		this.updateTimer();
+		
+		this.initTimers();
+		
+		var that = this;
 		$(timerButtons.startButt).click(function(){
-			pomodoroTimer.start();
+			that.workTimer.start();
 			$(timerButtons.startButt).hide();
 			$(timerButtons.pauseButt).show();
 		});
+		
 		$(timerButtons.pauseButt).click(function(){
-			pomodoroTimer.pause();
+			that.workTimer.pause();
 			$(timerButtons.startButt).show();
 			$(timerButtons.pauseButt).hide();
 		});
-		$(timerButtons.resetButt).click(function(){pomodoroTimer.reset()});
+		$(timerButtons.resetButt).click(function(){that.workTimer.reset()});
+
+		this.reset();
+	},
+
+	reset:function(){
+		this.workTimer.reset();
+		$(this.timerButtons.pauseButt).hide();
+		$(this.timerButtons.startButt).show();
+	},
+
+	initTimers:function(){
+		var that = this;
+		this.pomodoroNotifier = Object.beget(Notifier);
+		this.pomodoroNotifier.NotificationType = 'basic';
+		this.pomodoroNotifier.iconUrl = 'pomodoroIcon.png';
+
+		this.workTimer = Object.beget(Timer);
+		this.workTimer.init({
+			totalTime: 25,
+			callBackTrigger : function(){
+				that.pomodoroNotifier.notify({'title':'Pomodoro Done', 'message':'Time for a break'});
+				that.reset();
+			},
+			update:function(){
+				console.log(this);
+				$(PomodoroTimer.timerDisplay.minutes).html(("0"+PomodoroTimer.workTimer.timeLeft['minutes']).slice(-2));
+				$(PomodoroTimer.timerDisplay.seconds).html(("0"+PomodoroTimer.workTimer.timeLeft['seconds']).slice(-2));
+			},
+		});
 	}
 }

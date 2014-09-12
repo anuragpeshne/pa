@@ -1,4 +1,4 @@
-notifier = {
+Notifier = {
 	notificationID : '', 				//leave blank for auto generation
 	NotificationType : 'basic',
 	iconUrl : 'icon.png',
