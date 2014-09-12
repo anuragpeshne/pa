@@ -22,7 +22,11 @@ pomodoroTimer = {
 
 	start:function(){
 		var that = this;
-		this.clock = setInterval(function(){that.updateTimer();that.tick(); }, 1000);
+		(function startTimer(){
+			that.updateTimer();
+			that.tick();
+			that.clock = setTimeout(function(){startTimer()}, 1000);
+		})();
 	},
 	pause:function(){
 		if(this.clock)
