@@ -39,12 +39,12 @@ PomodoroTimer = {
 		this.workTimer = Object.beget(Timer);
 		this.currentTimer = this.workTimer;
 		this.workTimer.init({
-			totalTime: 25,
+			totalTime: 1,//25,
 			callBackTrigger : function(){
 				that.pomodoroNotifier.notify({'title':'Pomodoro Done', 'message':'Time for a break'});
-				that.reset();
 				that.playTimer.start();
 				that.currentTimer = that.playTimer;
+				that.reset();
 			},
 			update:function(){
 				$(PomodoroTimer.timerDisplay.minutes).html(("0"+PomodoroTimer.currentTimer.timeLeft['minutes']).slice(-2));
@@ -56,8 +56,8 @@ PomodoroTimer = {
 			totalTime : 5,
 			callBackTrigger : function(){
 				that.pomodoroNotifier.notify({'title':'Time\'s Up!','message':'Let\'s get back to work'});
+				that.currentTimer = that.workTimer;
 				that.reset();
-				that.currentTimer = that,workTimer;
 			}
 		});
 	},
