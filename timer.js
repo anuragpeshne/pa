@@ -8,7 +8,7 @@ Timer = {
 			}
 			else{
 				this.timeLeft['minutes'] -= 1;
-				this.timeLeft['seconds'] += 6//0; 			//add 60 seconds
+				this.timeLeft['seconds'] += 60; 			//add 60 seconds
 			}
 		}
 		this.timeLeft['seconds']--; 						//not sure if doing this after 00:00 is ok

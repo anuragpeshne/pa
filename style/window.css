@@ -1,3 +1,31 @@
+@font-face {
+	font-family: LatoLite;
+	src: url('../resources/Lato-Light.ttf');
+}
+@font-face {
+	font-family: Lato;
+	src: url('../resources/Lato-Regular.ttf');
+}
+body {
+	font-family: 'Lato','sans-serif';
+}
+#pomodoroContainer {
+	text-align : center;
+	font-family: 'LatoLite', sans-serif;
+}
+#pomodoroContainer button {
+	border: none;
+	background: inherit;
+	font-size : 30px;
+	font-family: 'Lato', sans-serif;
+	cursor : pointer;
+}
+#pomodoroContainer button#startButt {
+	border-right : 1px;
+}
+#pomodoroContainer #pomodoroTimer {
+	font-size : 75px;
+}
 #pomodoroContainer #pauseButt{
 	display	: none;
 }
