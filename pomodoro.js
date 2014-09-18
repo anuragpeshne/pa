@@ -1,4 +1,5 @@
 PomodoroTimer = {
+	notificationLog: [],					//this keeps record of all the notifications sent. This will help and tracking during notification event callbacks
 
 	initialize:function(timerButtons, timerDisplay){
 		this.timerButtons = timerButtons;
@@ -37,17 +38,18 @@ PomodoroTimer = {
 		this.pomodoroNotifier.NotificationType = 'basic';
 		this.pomodoroNotifier.iconUrl = 'pomodoroIcon.png';
 		this.pomodoroNotifier.setAlertSound('alert.mp3'); 			//this automatically picks up from resources folder
+		this.pomodoroNotifier.buttons = [{'title':'Yes'},{'title':'No'}];
+		this.pomodoroNotifier.notificationLog = this.notificationLog;
 		
 		this.workTimer = Object.beget(Timer);
 		this.workTimer.displayColor = 'red';
 		this.currentTimer = this.workTimer;
 		this.workTimer.init({
-			totalTime: 25,
+			totalTime: 1,//25,
 			callBackTrigger : function(){
-				that.pomodoroNotifier.notify({'title':'Pomodoro Done', 'message':'Time for a break'});
+				that.pomodoroNotifier.notify({'title':'Pomodoro Done', 'message':'Would you like to take a break now?'});
 				that.currentTimer = that.playTimer;
 				that.reset();
-				$(that.timerButtons.startButt).trigger('click');
 			},
 			update:function(){
 				$(PomodoroTimer.timerDisplay.minutes).html(("0"+PomodoroTimer.currentTimer.timeLeft['minutes']).slice(-2));
@@ -58,15 +60,11 @@ PomodoroTimer = {
 		this.playTimer.init({
 			totalTime : 5,
 			callBackTrigger : function(){
-				that.pomodoroNotifier.notify({'title':'Time\'s Up!','message':'Let\'s get back to work'});
+				that.pomodoroNotifier.notify({'title':'Time\'s Up!','message':'Would you to have another Pomodoro Session?'});
 				that.currentTimer = that.workTimer;
 				that.reset();
 			}
 		});
 		this.playTimer.displayColor = 'green';
 	},
-	pomodoroFlow:function(){
-		this.workTimer.reset();
-
-	}
 }
