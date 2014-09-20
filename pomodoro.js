@@ -1,5 +1,6 @@
 PomodoroTimer = {
 	notificationLog: [],					//this keeps record of all the notifications sent. This will help and tracking during notification event callbacks
+	sessionId : 0,
 
 	initialize:function(timerButtons, timerDisplay){
 		this.timerButtons = timerButtons;
@@ -30,6 +31,7 @@ PomodoroTimer = {
 		$(this.timerButtons.pauseButt).hide();
 		$(this.timerButtons.startButt).show();
 		$(this.timerDisplay.container).css({'color':this.currentTimer.displayColor});
+		this.sessionId++;
 	},
 
 	initTimers:function(){
@@ -47,7 +49,7 @@ PomodoroTimer = {
 		this.workTimer.init({
 			totalTime: 1,//25,
 			callBackTrigger : function(){
-				that.pomodoroNotifier.notify({'title':'Pomodoro Done', 'message':'Would you like to take a break now?'});
+				that.pomodoroNotifier.notify({'title':'Pomodoro Done', 'message':'Would you like to take a break now?','enableButtons':true});
 				that.currentTimer = that.playTimer;
 				that.reset();
 			},
@@ -55,12 +57,16 @@ PomodoroTimer = {
 				$(PomodoroTimer.timerDisplay.minutes).html(("0"+PomodoroTimer.currentTimer.timeLeft['minutes']).slice(-2));
 				$(PomodoroTimer.timerDisplay.seconds).html(("0"+PomodoroTimer.currentTimer.timeLeft['seconds']).slice(-2));
 			},
+			windupCallBack: function() {
+				console.log("windup");
+				that.pomodoroNotifier.update('progress-note-'+that.sessionId, {'title':'Revise/Speed Up/Wind up!','message':'Less Than a Minute Left'}, that.workTimer.progress); 
+			},
 		});
 		this.playTimer = Object.beget(this.workTimer);
 		this.playTimer.init({
 			totalTime : 5,
 			callBackTrigger : function(){
-				that.pomodoroNotifier.notify({'title':'Time\'s Up!','message':'Would you to have another Pomodoro Session?'});
+				that.pomodoroNotifier.notify({'title':'Play Time\'s Up!','message':'Would you to have another Pomodoro Session?','enableButtons':true});
 				that.currentTimer = that.workTimer;
 				that.reset();
 			}
