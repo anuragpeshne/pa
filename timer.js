@@ -10,9 +10,9 @@ Timer = {
 			}
 			else{
 				this.timeLeft['minutes'] -= 1;
-				this.timeLeft['seconds'] += 6//0; 			//add 60 seconds
+				this.timeLeft['seconds'] += 60; 			//add 60 seconds
 
-				if(this.timeLeft.minutes < 1){
+				if(this.timeLeft.minutes < 1 && typeof(this.windupCallBack) !== 'undefined'){
 					var tempFun = this.update;
 					this.update = function(){
 						tempFun();

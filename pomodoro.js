@@ -47,7 +47,7 @@ PomodoroTimer = {
 		this.workTimer.displayColor = 'red';
 		this.currentTimer = this.workTimer;
 		this.workTimer.init({
-			totalTime: 1,//25,
+			totalTime: 25,
 			callBackTrigger : function(){
 				that.pomodoroNotifier.notify({'title':'Pomodoro Done', 'message':'Would you like to take a break now?','enableButtons':true});
 				that.currentTimer = that.playTimer;
@@ -57,10 +57,11 @@ PomodoroTimer = {
 				$(PomodoroTimer.timerDisplay.minutes).html(("0"+PomodoroTimer.currentTimer.timeLeft['minutes']).slice(-2));
 				$(PomodoroTimer.timerDisplay.seconds).html(("0"+PomodoroTimer.currentTimer.timeLeft['seconds']).slice(-2));
 			},
+			/*
 			windupCallBack: function() {
 				console.log("windup");
 				that.pomodoroNotifier.update('progress-note-'+that.sessionId, {'title':'Revise/Speed Up/Wind up!','message':'Less Than a Minute Left'}, that.workTimer.progress); 
-			},
+			},*/
 		});
 		this.playTimer = Object.beget(this.workTimer);
 		this.playTimer.init({
