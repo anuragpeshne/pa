@@ -42,7 +42,7 @@ Notifier = {
 
 	update:function(notificationId, notification,progress){
 		notificationOptions = {
-			'type' : notification.NotificationType || this.NotificationType,
+			'type' : notification.type || this.NotificationType,
 			'iconUrl' : notification.iconUrl || this.iconUrl,
 			'title' : notification.title || this.title,
 			'message' : notification.message || this.message,
