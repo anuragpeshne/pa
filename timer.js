@@ -1,6 +1,7 @@
 Timer = {
 	
 	progress: 0,
+	windupTimeout : 1,
 
 	tick:function(){
 		if(this.timeLeft['seconds'] === 0){ 				//if seconds are 00
@@ -10,20 +11,21 @@ Timer = {
 			}
 			else{
 				this.timeLeft['minutes'] -= 1;
-				this.timeLeft['seconds'] += 6//0; 			//add 60 seconds
+				this.timeLeft['seconds'] += 60; 			//add 60 seconds
 
-				if(this.timeLeft.minutes < 1 && typeof(this.windupCallBack) !== 'undefined'){
+				if(this.timeLeft.minutes < this.windupTimeout && typeof(this.windupCallBack) !== 'undefined'){
 					var tempFun = this.update;
-					this.update = function(){
+						this.update = function(){
 						tempFun();
 						this.windupCallBack();
 					}
 				}
 			}
 		}
-		this.timeLeft['seconds']--; 						//not sure if doing this after 00:00 is ok
-		this.progress = Math.floor((this.totalTime - (this.timeLeft.minutes+this.timeLeft.seconds/60))/this.totalTime * 100);			//this is rough estimate
+		this.progress = Math.ceil((this.windupTimeout - (this.timeLeft.minutes+this.timeLeft.seconds/60))/this.windupTimeout * 100);			//this is rough estimate
 		console.log(this.totalTime +" "+ this.timeLeft.minutes +" "+ this.progress);
+
+		this.timeLeft['seconds']--; 						//not sure if doing this after 00:00 is ok
 		return true;
 	},
 

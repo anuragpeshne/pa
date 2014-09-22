@@ -47,7 +47,7 @@ PomodoroTimer = {
 		this.workTimer.displayColor = 'red';
 		this.currentTimer = this.workTimer;
 		this.workTimer.init({
-			totalTime:1,// 25,
+			totalTime: 25,
 			callBackTrigger : function(){
 				that.pomodoroNotifier.notify({'title':'Pomodoro Done', 'message':'Would you like to take a break now?','enableButtons':true});
 				that.currentTimer = that.playTimer;
