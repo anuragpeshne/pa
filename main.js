@@ -2,6 +2,8 @@ $(document).ready(function(){
 	timerDisplay = {'container':'#pomodoroTimer','minutes' :'#pomodoroTimer span#minutes', 'seconds' :'#pomodoroTimer span#seconds'};
 	timerButtons = {'startButt':'#pomodoroContainer #startButt', 'pauseButt':'#pomodoroContainer #pauseButt', 'resetButt':'#pomodoroContainer #resetButt'};
 	PomodoroTimer.initialize(timerButtons, timerDisplay);
+
+	List.construct();
 });
 
 
