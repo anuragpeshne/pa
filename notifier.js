@@ -18,7 +18,7 @@ Notifier = {
 			'title' : notification.title || this.title,
 			'message' : notification.message || this.message,
 			'isClickable' : true,
-			'contextMessage':'this is this'
+			'contextMessage':'PA'
 		}
 		if(typeof(notification.enableButtons) !== 'undefined' && notification.enableButtons)
 			notificationOptions.buttons = this.buttons;
@@ -47,7 +47,7 @@ Notifier = {
 			'title' : notification.title || this.title,
 			'message' : notification.message || this.message,
 			'isClickable' : true,
-			'contextMessage':'this is this'
+			'contextMessage':'PA'
 		}
 		notificationOptions.progress = progress;
 		chrome.notifications.update(notificationId, notificationOptions, function(wasDone){

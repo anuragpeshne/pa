@@ -63,6 +63,7 @@ PomodoroTimer = {
 				that.pomodoroNotifier.update('progress-note-'+that.sessionId, {'type':'progress','title':'Revise/Speed Up/Wind up!','message':'Less Than a Minute Left'}, that.workTimer.progress); 
 			},
 		});
+
 		this.playTimer = Object.beget(this.workTimer);
 		this.playTimer.init({
 			totalTime : 5,
@@ -70,6 +71,7 @@ PomodoroTimer = {
 				that.pomodoroNotifier.notify({'title':'Play Time\'s Up!','message':'Would you to have another Pomodoro Session?','enableButtons':true});
 				that.currentTimer = that.workTimer;
 				that.reset();
+				that.initTimers();
 			}
 		});
 		this.playTimer.displayColor = 'green';

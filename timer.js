@@ -23,7 +23,6 @@ Timer = {
 			}
 		}
 		this.progress = Math.ceil((this.windupTimeout - (this.timeLeft.minutes+this.timeLeft.seconds/60))/this.windupTimeout * 100);			//this is rough estimate
-		console.log(this.totalTime +" "+ this.timeLeft.minutes +" "+ this.progress);
 
 		this.timeLeft['seconds']--; 						//not sure if doing this after 00:00 is ok
 		return true;
