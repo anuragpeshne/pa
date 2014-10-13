@@ -2,6 +2,7 @@ Timer = {
 	
 	progress: 0,
 	windupTimeout : 1,
+	clockSpeed: 1,
 
 	tick:function(){
 		if(this.timeLeft['seconds'] === 0){ 				//if seconds are 00
@@ -33,7 +34,7 @@ Timer = {
 		(function startTimer(){
 			that.update();
 			if(that.tick())
-				that.clock = setTimeout(function(){startTimer()}, 1000);
+				that.clock = setTimeout(function(){startTimer()}, 1000/that.clockSpeed);
 			else
 				that.clock = 0;
 		})();

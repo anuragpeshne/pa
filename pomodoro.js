@@ -72,7 +72,10 @@ PomodoroTimer = {
 				that.currentTimer = that.workTimer;
 				that.reset();
 				that.initTimers();
-			}
+			},
+			windupCallBack: function() {
+				that.pomodoroNotifier.update('progress-note-play-'+that.sessionId, {'type':'progress', 'title':'Come Back!', 'message':'Play time about to get over'}, that.playTimer.progress);
+			},
 		});
 		this.playTimer.displayColor = 'green';
 	},

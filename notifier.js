@@ -12,13 +12,14 @@ Notifier = {
 	},
 
 	notify:function(notification){
+		var date = new Date();
 		notificationOptions = {
 			'type' : notification.NotificationType || this.NotificationType,
 			'iconUrl' : notification.iconUrl || this.iconUrl,
 			'title' : notification.title || this.title,
 			'message' : notification.message || this.message,
 			'isClickable' : true,
-			'contextMessage':'PA'
+			'contextMessage':'PA'+ ' @' + date.getHours() + ':' + date.getMinutes(),
 		}
 		if(typeof(notification.enableButtons) !== 'undefined' && notification.enableButtons)
 			notificationOptions.buttons = this.buttons;
@@ -41,13 +42,15 @@ Notifier = {
 	},
 
 	update:function(notificationId, notification,progress){
+		var date = new Date();
 		notificationOptions = {
 			'type' : notification.type || this.NotificationType,
 			'iconUrl' : notification.iconUrl || this.iconUrl,
 			'title' : notification.title || this.title,
 			'message' : notification.message || this.message,
 			'isClickable' : true,
-			'contextMessage':'PA'
+			'contextMessage':'PA' + ' @' + date.getHours() + ':' + date.getMinutes(),
+
 		}
 		notificationOptions.progress = progress;
 		chrome.notifications.update(notificationId, notificationOptions, function(wasDone){
